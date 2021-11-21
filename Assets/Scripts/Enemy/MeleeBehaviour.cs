@@ -9,8 +9,8 @@ namespace Enemy
             GoToTarget,
             RunAway,
             Attacking
-        }       
-       
+        }  
+        
         public MeleeBehaviour(EnemyController controller) : base(controller)
         {
             
