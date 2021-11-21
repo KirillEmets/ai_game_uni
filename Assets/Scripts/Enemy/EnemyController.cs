@@ -9,7 +9,7 @@ namespace Enemy
 
         public EnemyObject enemyObject;
 
-        private EnemyBehaviour MovementBehaviour { get; set; }
+        private EnemyBehaviour EnemyBehaviour { get; set; }
 
         public bool PlayerDetected { get; private set; }
         private PlayerController Player { get; set; }
@@ -18,15 +18,23 @@ namespace Enemy
         private void Start()
         {
             Rb = GetComponent<Rigidbody2D>();
-            MovementBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
+            EnemyBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
             Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            EnemyBehaviour.Player = Player;
+            EnemyBehaviour.EnemyController = this;
         }
 
         private void Update()
         {
             if(!PlayerDetected)
                 DetectPlayer();
-            Rb.velocity = MovementBehaviour.GetVelocity(Player);
+            
+            EnemyBehaviour.Update();
+        }
+
+        public void SetVelocity(Vector2 velocity)
+        {
+            Rb.velocity = velocity;
         }
 
         private void DetectPlayer()

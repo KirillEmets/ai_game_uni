@@ -6,13 +6,15 @@ namespace Enemy
     {
         protected EnemyController Controller { get; }
         protected readonly EnemyObject enemyObject;
+        public PlayerController Player { get; set; }
+        public EnemyController EnemyController { get; set; }
 
         protected EnemyBehaviour(EnemyController controller)
         {
             Controller = controller;
             enemyObject = controller.enemyObject;
         }
-
-        public abstract Vector2 GetVelocity(Entity target);
+        
+        public abstract void Update();
     }
 }
