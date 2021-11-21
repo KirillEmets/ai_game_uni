@@ -9,14 +9,17 @@ namespace Enemy
             GoToTarget,
             RunAway,
             Attacking
-        }  
-        
+        }
+
+        private MeleeState State;
+
+        private MeleeAoEAttack AoEAttack;
         public MeleeBehaviour(EnemyController controller) : base(controller)
         {
             
         }
 
-        private Vector2 GetVelocity(Entity target)
+        private Vector2 GetVelocity(Component target)
         {
             if (!Controller.PlayerDetected)
                 return Vector2.zero;
@@ -25,7 +28,16 @@ namespace Enemy
 
         public override void Update()
         {
-            EnemyController.SetVelocity(GetVelocity(Player));
+            Controller.SetVelocity(GetVelocity(Player));
+
+            if (ShouldAttack())
+            {
+                AoEAttack.Perform(Controller, enemyObject, ~(1 << 7));
+            }
         }
+
+        public bool ShouldAttack() =>
+            Vector2.Distance(Controller.transform.position, Player.transform.position) <
+            Controller.enemyObject.attackDistance * 0.7f;
     }
 }

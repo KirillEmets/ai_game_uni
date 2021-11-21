@@ -16,11 +16,11 @@ namespace Enemy
         private Rigidbody2D Rb { get; set; }
         private void Start()
         {
+            base.Start();
             Rb = GetComponent<Rigidbody2D>();
             EnemyBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
             Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             EnemyBehaviour.Player = Player;
-            EnemyBehaviour.EnemyController = this;
         }
 
         private void Update()

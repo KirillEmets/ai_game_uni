@@ -1,18 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using UnityEngine;
 
 public class PlayerController : Entity
 {
     private Rigidbody2D Rb { get; set; }
     internal Vector2 Velocity { get; private set; }
-    public float speed;
 
     private Vector2 _refVelocity = Vector2.zero;
 
-    void Start()
+
+    new void Start()
     {
+        Debug.Log("KEk");
+        base.Start();
         Rb = GetComponent<Rigidbody2D>();
     }
 
@@ -26,7 +29,7 @@ public class PlayerController : Entity
             direction.Normalize();
         }
 
-        Velocity = Vector2.SmoothDamp(Velocity, direction * speed, ref _refVelocity, 0.1f);
+        Velocity = Vector2.SmoothDamp(Velocity, direction * Stats.movementSpeed, ref _refVelocity, 0.1f);
         Rb.velocity = Velocity;
     }
 }

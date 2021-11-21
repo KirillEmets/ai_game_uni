@@ -7,7 +7,6 @@ namespace Enemy
         protected EnemyController Controller { get; }
         protected readonly EnemyObject enemyObject;
         public PlayerController Player { get; set; }
-        public EnemyController EnemyController { get; set; }
 
         protected EnemyBehaviour(EnemyController controller)
         {
