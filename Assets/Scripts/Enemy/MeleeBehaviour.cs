@@ -32,7 +32,7 @@ namespace Enemy
 
             if (ShouldAttack())
             {
-                AoEAttack.Perform(Controller, enemyObject, ~(1 << 7));
+                AoEAttack.Perform(Controller, enemyObject, 1 << 8);
             }
         }
 

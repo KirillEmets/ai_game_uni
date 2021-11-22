@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1647572149}
   - component: {fileID: 2678413896170810420}
   - component: {fileID: 1411585438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -132,8 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2d189d7a520a045b57c14e92ccb430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
-  Stats: {fileID: 11400000, guid: 365dfd255a569cc4eb502d5cc296de59, type: 2}
+  stats: {fileID: 11400000, guid: 365dfd255a569cc4eb502d5cc296de59, type: 2}
 --- !u!58 &1647572149
 CircleCollider2D:
   m_ObjectHideFlags: 0
