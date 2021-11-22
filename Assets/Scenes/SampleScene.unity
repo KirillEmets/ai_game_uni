@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdd47befd15477c892f0a6117ece49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 0
+  Stats: {fileID: 11400000, guid: 6d4efd59df62bc1439d8216164bbaba3, type: 2}
   enemyObject: {fileID: 11400000, guid: 6d4efd59df62bc1439d8216164bbaba3, type: 2}
 --- !u!212 &526614296
 SpriteRenderer:
@@ -49958,6 +49960,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4304160490134154094, guid: 8abce44290bfc32458072079566977d6, type: 3}
+      propertyPath: Stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 365dfd255a569cc4eb502d5cc296de59, type: 2}
     - target: {fileID: 4304160490134154094, guid: 8abce44290bfc32458072079566977d6, type: 3}
       propertyPath: speed
       value: 6
