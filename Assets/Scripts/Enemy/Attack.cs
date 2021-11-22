@@ -22,7 +22,8 @@ namespace Enemy
 
             foreach (var col in _targets)
             {
-                col.GetComponent<Entity>().TakeDamage(stats.damage);
+                if (col != null)
+                    col.GetComponent<Entity>().TakeDamage(stats.damage);
             }
         }
     }

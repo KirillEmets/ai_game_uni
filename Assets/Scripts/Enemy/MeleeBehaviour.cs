@@ -13,7 +13,7 @@ namespace Enemy
 
         private MeleeState State;
 
-        private MeleeAoEAttack AoEAttack;
+        private MeleeAoEAttack AoEAttack = new MeleeAoEAttack();
         public MeleeBehaviour(EnemyController controller) : base(controller)
         {
             
