@@ -29,7 +29,7 @@ public class PlayerController : Entity
             direction.Normalize();
         }
 
-        Velocity = Vector2.SmoothDamp(Velocity, direction * Stats.movementSpeed, ref _refVelocity, 0.1f);
+        Velocity = Vector2.SmoothDamp(Velocity, direction * stats.movementSpeed, ref _refVelocity, 0.1f);
         Rb.velocity = Velocity;
     }
 }
