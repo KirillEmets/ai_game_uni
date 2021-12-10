@@ -10,18 +10,25 @@ namespace Player
         public Animator animator;
         public PlayerController playerController;
         private static readonly int IsRunning = Animator.StringToHash("isRunning");
+        private static readonly int Attack = Animator.StringToHash("attack");
         private int _direction = 1;
         private Camera mainCamera;
 
         void Start()
         {
             mainCamera = Camera.main;
+            playerController.OnAttackStart += OnAttackStart;
+        }
+
+        void OnAttackStart()
+        {
+            animator.SetTrigger(Attack);
         }
 
         void Update()
         {
             animator.SetBool(IsRunning, playerController.Velocity.magnitude > 0.1f);
-            
+
             var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             var mouseDirectionX = mousePos.x - transform.position.x;
             var charDir = mouseDirectionX < 0 ? 1 : -1;

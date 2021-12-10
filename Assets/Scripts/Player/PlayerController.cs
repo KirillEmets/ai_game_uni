@@ -10,6 +10,7 @@ public class PlayerController : Entity
     internal Vector2 Velocity { get; private set; }
 
     private Vector2 _refVelocity = Vector2.zero;
+    public event Action OnAttackStart = delegate { };
 
 
     new void Start()
