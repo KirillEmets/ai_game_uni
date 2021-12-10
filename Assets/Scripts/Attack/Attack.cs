@@ -19,10 +19,10 @@ namespace Enemy
             
         }
 
-        public void Perform(Entity entity, Stats stats, Entity target, int targetsMask)
+        public bool Perform(Entity entity, Stats stats, Entity target, int targetsMask)
         {
             if(!IsReady())
-                return;
+                return false;
 
             nextAttackTime = Time.time + GetCooldown();
             if (target != null)
@@ -33,6 +33,8 @@ namespace Enemy
             {
                 PerformNoTarget(entity, stats, targetsMask);
             }
+
+            return true;
         }
 
         public bool IsReady() => Time.time >= nextAttackTime;

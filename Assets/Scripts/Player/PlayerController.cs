@@ -49,6 +49,16 @@ public class PlayerController : Entity
 
     void Attack()
     {
+        if (attack.IsReady())
+        {
+            OnAttackStart.Invoke();
+            StartCoroutine(nameof(WaitAndPerformAttack));
+        }
+    }
+
+    IEnumerator WaitAndPerformAttack()
+    {
+        yield return new WaitForSeconds(0.3f);
         attack.Perform(this, stats, null, ~(1 << 8));
     }
 }
