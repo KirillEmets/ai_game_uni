@@ -12,16 +12,24 @@ public class PlayerController : Entity
     private Vector2 _refVelocity = Vector2.zero;
     public event Action OnAttackStart = delegate { };
 
+    public Attack attack;
 
     new void Start()
     {
         Debug.Log("KEk");
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
+        attack = new MeleeAoEAttack();
     }
 
     void Update()
     {
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnMouseClick();
+        }
+        
         var vertical = Input.GetAxisRaw("Vertical");
         var horizontal = Input.GetAxisRaw("Horizontal");
         var direction = new Vector2(horizontal, vertical);
@@ -32,5 +40,15 @@ public class PlayerController : Entity
 
         Velocity = Vector2.SmoothDamp(Velocity, direction * stats.movementSpeed, ref _refVelocity, 0.1f);
         Rb.velocity = Velocity;
+    }
+
+    void OnMouseClick()
+    {
+        Attack();
+    }
+
+    void Attack()
+    {
+        attack.Perform(this, stats, null, ~(1 << 8));
     }
 }

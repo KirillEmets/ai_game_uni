@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
 {
     private float MaxHealth { get; set; }
     
-    private float _health;
+    public float _health;
     private float Health
     {
         get => _health;
