@@ -21,7 +21,10 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public event Action<float, float> OnHealthChanged = delegate(float f, float f1) { };
+    public GameObject healthBarPrefab;
+    public HealthBarScript healthBarScript;
+
+    public event Action<float, float> OnHealthChanged = delegate { };
 
     [FormerlySerializedAs("Stats")] public Stats stats;
 
@@ -32,6 +35,14 @@ public class Entity : MonoBehaviour
     {
         MaxHealth = stats.health;
         Health = stats.health;
+
+        healthBarScript = GameObject.Instantiate(healthBarPrefab).GetComponent<HealthBarScript>();
+        healthBarScript.Bind(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameObject.Destroy(healthBarScript.gameObject);
     }
 
     public void TakeDamage(float amount)
