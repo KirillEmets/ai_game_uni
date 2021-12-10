@@ -36,13 +36,14 @@ public class Entity : MonoBehaviour
         MaxHealth = stats.health;
         Health = stats.health;
 
-        healthBarScript = GameObject.Instantiate(healthBarPrefab).GetComponent<HealthBarScript>();
+        healthBarScript = Instantiate(healthBarPrefab).GetComponent<HealthBarScript>();
         healthBarScript.Bind(this);
     }
 
     private void OnDestroy()
     {
-        GameObject.Destroy(healthBarScript.gameObject);
+        if(healthBarScript!=null)
+            Destroy(healthBarScript.gameObject);
     }
 
     public void TakeDamage(float amount)
