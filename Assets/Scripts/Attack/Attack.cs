@@ -21,8 +21,7 @@ namespace Enemy
 
         public void Perform(Entity entity, Stats stats, Entity target, int targetsMask)
         {
-            if(!IsReady())
-                return;
+            if(!IsReady()) return;
 
             nextAttackTime = Time.time + GetCooldown();
             if (target != null)
