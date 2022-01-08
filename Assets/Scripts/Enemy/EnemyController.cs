@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
-public class EnemyController : Entity
+public class EnemyController : Entity, IKnightAnimatable
 {
     const int PlayerLayerMask = ~(1 << 7);
 
@@ -52,4 +53,8 @@ public class EnemyController : Entity
             PlayerDetected = true;
         }
     }
+
+    public event Action OnAttackStart = delegate { };
+    public bool IsRunning() => GetVelocity().magnitude > 0.1f;
+    public int GetDirection() => GetVelocity().x < 0 ? 1 : -1;
 }

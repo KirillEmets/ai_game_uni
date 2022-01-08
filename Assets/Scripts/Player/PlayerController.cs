@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Entity
+public class PlayerController : Entity, IKnightAnimatable
 {
     private Rigidbody2D Rb { get; set; }
     internal Vector2 Velocity { get; private set; }
 
     private Vector2 _refVelocity = Vector2.zero;
-    public event Action OnAttackStart = delegate { };
 
     public Attack attack;
 
@@ -59,5 +58,15 @@ public class PlayerController : Entity
     {
         yield return new WaitForSeconds(0.3f);
         attack.Perform(this, stats, null, targetsMask: ~(1 << 8));
+    }
+    
+    public event Action OnAttackStart = delegate { };
+    public bool IsRunning() => Velocity.magnitude > 0.1f;
+
+    public int GetDirection()
+    {
+        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var mouseDirectionX = mousePos.x - transform.position.x;
+        return mouseDirectionX < 0 ? 1 : -1;
     }
 }

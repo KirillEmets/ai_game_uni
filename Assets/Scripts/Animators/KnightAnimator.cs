@@ -1,11 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public abstract class KnightAnimator : MonoBehaviour
+public class KnightAnimator : MonoBehaviour
 {
     public Animator animator;
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
     private static readonly int Attack = Animator.StringToHash("attack");
     private int _direction = 1;
+    
+    private IKnightAnimatable Animatable { get; set; }
+    public Entity animatable;
+
+    private void Start()
+    {
+        Animatable = animatable as IKnightAnimatable;
+        Animatable.OnAttackStart += OnAttackStart;
+    }
 
     public void OnAttackStart()
     {
@@ -14,9 +24,9 @@ public abstract class KnightAnimator : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool(IsRunning, GetIsRunning());
+        animator.SetBool(IsRunning, Animatable.IsRunning());
         
-        var charDir = GetCharDirection();
+        var charDir = Animatable.GetDirection();
         if (_direction != charDir)
         {
             _direction = charDir;
@@ -25,7 +35,4 @@ public abstract class KnightAnimator : MonoBehaviour
             transform.localScale = new Vector3(charDir, scale.y, scale.z);
         }
     }
-
-    public abstract bool GetIsRunning();
-    public abstract int GetCharDirection();
 }
