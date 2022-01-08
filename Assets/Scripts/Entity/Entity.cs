@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     private float MaxHealth { get; set; }
 
@@ -53,4 +53,6 @@ public class Entity : MonoBehaviour
 
         Health = math.max(0, Health - amount);
     }
+
+    public abstract int GetLayerMask();
 }

@@ -8,6 +8,7 @@ public class RangeAttack : Attack
 
     protected override void PerformTarget(Entity entity, Stats stats, Entity target)
     {
+        PerformOnPosition(entity, stats, target.transform.position, target.GetLayerMask());
     }
 
     protected override void PerformOnPosition(Entity entity, Stats stats, Vector2 position, int targetsMask)

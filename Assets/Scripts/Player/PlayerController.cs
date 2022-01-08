@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerController : Entity, IKnightAnimatable
 {
+    
+    public override int GetLayerMask() => ~(1 << 7);
+
     private Rigidbody2D Rb { get; set; }
     internal Vector2 Velocity { get; private set; }
 
@@ -19,6 +22,7 @@ public class PlayerController : Entity, IKnightAnimatable
         Rb = GetComponent<Rigidbody2D>();
         attack = new MeleeAoEAttack();
     }
+
 
     void Update()
     {

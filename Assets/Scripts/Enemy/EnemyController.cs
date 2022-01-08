@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyController : Entity, IKnightAnimatable
 {
+    public override int GetLayerMask() => ~(1 << 8);
+
     const int PlayerLayerMask = ~(1 << 7);
 
     public EnemyObject enemyObject;
