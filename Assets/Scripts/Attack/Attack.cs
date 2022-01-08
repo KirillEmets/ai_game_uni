@@ -19,6 +19,7 @@ public abstract class Attack
 
     protected virtual void PerformOnPosition(Entity entity, Stats stats, Vector2 position, int targetsMask)
     {
+        PerformNoTarget(entity, stats, targetsMask);
     }
 
     public void Perform(AttackParams attackParams)

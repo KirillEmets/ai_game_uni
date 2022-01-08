@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerController : Entity, IKnightAnimatable
 {
     
-    public override int GetLayerMask() => ~(1 << 7);
+    public override int GetLayerMask() => 1 << 8;
+    private const int EnemyTargetMask = ~(1 << 8); 
 
     private Rigidbody2D Rb { get; set; }
     internal Vector2 Velocity { get; private set; }
@@ -20,7 +21,7 @@ public class PlayerController : Entity, IKnightAnimatable
         Debug.Log("KEk");
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
-        attack = new MeleeAoEAttack();
+        attack = new RangeAttack();
     }
 
 
@@ -46,22 +47,23 @@ public class PlayerController : Entity, IKnightAnimatable
 
     void OnMouseClick()
     {
-        StartAttack();
+        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        StartAttack(new AttackParams(this, stats, mousePos, EnemyTargetMask));
     }
 
-    void StartAttack()
+    public void StartAttack(AttackParams attackParams)
     {
         if (!attack.IsReady() || attack.Preserved) return;
-        
+
         attack.Preserve();
         OnAttackStart.Invoke();
-        StartCoroutine(nameof(WaitAndPerformAttack));
+        StartCoroutine(nameof(WaitAndPerformAttack), attackParams);
     }
 
-    IEnumerator WaitAndPerformAttack()
+    IEnumerator WaitAndPerformAttack(AttackParams attackParams)
     {
         yield return new WaitForSeconds(0.3f);
-        attack.Perform(new AttackParams(this, stats, targetsMask: ~(1 << 8)));
+        attack.Perform(attackParams);
     }
     
     public event Action OnAttackStart = delegate { };
