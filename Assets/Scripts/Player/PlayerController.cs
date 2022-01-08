@@ -18,7 +18,6 @@ public class PlayerController : Entity, IKnightAnimatable
 
     new void Start()
     {
-        Debug.Log("KEk");
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
         attack = new RangeAttack();
