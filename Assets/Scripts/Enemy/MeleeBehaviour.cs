@@ -31,7 +31,7 @@ public class MeleeBehaviour : EnemyBehaviour
 
         if (ShouldAttack())
         {
-            AoEAttack.Perform(Controller, enemyObject, null, 1 << 8);
+            AoEAttack.Perform(Controller, enemyObject, null, targetsMask: 1 << 8);
         }
     }
 

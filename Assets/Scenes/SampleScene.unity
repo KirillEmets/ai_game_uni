@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &526614292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 331301402494048266, guid: 9fd6f8115df42d9468a2027f9d013545, type: 3}
+  m_PrefabInstance: {fileID: 331301402714072862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &526614293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526614292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41281a9dc9cc428b9bfed9b5d582d94a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1922745440}
+  enemyController: {fileID: 526614295}
+--- !u!114 &526614295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 331301402494048265, guid: 9fd6f8115df42d9468a2027f9d013545, type: 3}
+  m_PrefabInstance: {fileID: 331301402714072862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526614292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdd47befd15477c892f0a6117ece49e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1763491164
 GameObject:
   m_ObjectHideFlags: 0
@@ -49696,6 +49726,11 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!95 &1922745440 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3318876431471448937, guid: 9fd6f8115df42d9468a2027f9d013545, type: 3}
+  m_PrefabInstance: {fileID: 331301402714072862}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2121880263
 GameObject:
   m_ObjectHideFlags: 0

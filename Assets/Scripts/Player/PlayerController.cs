@@ -43,21 +43,21 @@ public class PlayerController : Entity
 
     void OnMouseClick()
     {
-        Attack();
+        StartAttack();
     }
 
-    void Attack()
+    void StartAttack()
     {
-        if (attack.IsReady())
-        {
-            OnAttackStart.Invoke();
-            StartCoroutine(nameof(WaitAndPerformAttack));
-        }
+        if (!attack.IsReady() || attack.Preserved) return;
+        
+        attack.Preserve();
+        OnAttackStart.Invoke();
+        StartCoroutine(nameof(WaitAndPerformAttack));
     }
 
     IEnumerator WaitAndPerformAttack()
     {
         yield return new WaitForSeconds(0.3f);
-        attack.Perform(this, stats, null, ~(1 << 8));
+        attack.Perform(this, stats, null, targetsMask: ~(1 << 8));
     }
 }
