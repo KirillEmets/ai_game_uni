@@ -36,6 +36,8 @@ public class EnemyController : Entity
         Rb.velocity = velocity;
     }
 
+    public Vector2 GetVelocity() => Rb.velocity;
+
     private void DetectPlayer()
     {
         if (PlayerDetected) return;

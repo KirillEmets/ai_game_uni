@@ -20,7 +20,7 @@ public abstract class Attack
     {
         if (!IsReady()) return;
 
-        nextAttackTime = Time.time + GetCooldown();
+        nextAttackTime = Time.time + GetCooldown() / stats.attackSpeed;
         if (target != null)
         {
             PerformTarget(entity, stats, target);
