@@ -1,53 +1,53 @@
 ﻿using UnityEngine;
 
-namespace Enemy
+
+public class EnemyController : Entity
 {
-    public class EnemyController : Entity
+    const int PlayerLayerMask = ~(1 << 7);
+
+    public EnemyObject enemyObject;
+
+    private EnemyBehaviour EnemyBehaviour { get; set; }
+
+    public bool PlayerDetected { get; private set; }
+    private PlayerController Player { get; set; }
+
+    private Rigidbody2D Rb { get; set; }
+
+    private void Start()
     {
-        const int PlayerLayerMask = ~(1 << 7);
+        base.Start();
+        Rb = GetComponent<Rigidbody2D>();
+        EnemyBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
+        Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        EnemyBehaviour.Player = Player;
+    }
 
-        public EnemyObject enemyObject;
+    private void Update()
+    {
+        if (!PlayerDetected)
+            DetectPlayer();
 
-        private EnemyBehaviour EnemyBehaviour { get; set; }
+        EnemyBehaviour.Update();
+    }
 
-        public bool PlayerDetected { get; private set; }
-        private PlayerController Player { get; set; }
+    public void SetVelocity(Vector2 velocity)
+    {
+        Rb.velocity = velocity;
+    }
 
-        private Rigidbody2D Rb { get; set; }
-        private void Start()
+    private void DetectPlayer()
+    {
+        if (PlayerDetected) return;
+
+        var pos = transform.position;
+
+        var hit = Physics2D.Raycast(pos, Player.transform.position - pos, enemyObject.detectionDistance,
+            PlayerLayerMask);
+        var hitCollider = hit.collider;
+        if ((object) hitCollider != null && hitCollider.CompareTag("Player"))
         {
-            base.Start();
-            Rb = GetComponent<Rigidbody2D>();
-            EnemyBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
-            Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            EnemyBehaviour.Player = Player;
-        }
-
-        private void Update()
-        {
-            if(!PlayerDetected)
-                DetectPlayer();
-            
-            EnemyBehaviour.Update();
-        }
-
-        public void SetVelocity(Vector2 velocity)
-        {
-            Rb.velocity = velocity;
-        }
-
-        private void DetectPlayer()
-        {
-            if (PlayerDetected) return;
-            
-            var pos = transform.position;
-            
-            var hit = Physics2D.Raycast(pos, Player.transform.position - pos, enemyObject.detectionDistance, PlayerLayerMask);    
-            var hitCollider = hit.collider;
-            if ((object) hitCollider != null && hitCollider.CompareTag("Player"))
-            {
-                PlayerDetected = true;
-            }
+            PlayerDetected = true;
         }
     }
 }

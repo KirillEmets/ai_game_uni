@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Enemy;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,8 +6,9 @@ using UnityEngine.Serialization;
 public class Entity : MonoBehaviour
 {
     private float MaxHealth { get; set; }
-    
+
     public float _health;
+
     private float Health
     {
         get => _health;
@@ -42,7 +40,7 @@ public class Entity : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(healthBarScript!=null)
+        if (healthBarScript != null)
             Destroy(healthBarScript.gameObject);
     }
 

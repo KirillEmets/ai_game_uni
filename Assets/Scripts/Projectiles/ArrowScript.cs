@@ -1,0 +1,48 @@
+using UnityEngine;
+
+public class ArrowScript : MonoBehaviour
+{
+    private Vector2 Direction { get; set; } = Vector2.zero;
+    private Collider2D Collider { get; set; }
+    private GameObject Owner { get; set; }
+    private int TargetsMask { get; set; }
+    private int Damage { get; set; }
+
+    void Init(GameObject owner, int damage, Vector2 direction, int targetsMask)
+    {
+        Owner = owner;
+        Direction = direction.normalized;
+        transform.LookAt(transform.position + (Vector3) direction);
+        TargetsMask = targetsMask;
+        Damage = damage;
+    }
+
+    void Start()
+    {
+        Collider = GetComponent<Collider2D>();
+    }
+
+    void Update()
+    {
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        GameObject ogo = other.gameObject;
+        if (ogo == Owner)
+        {
+            return;
+        }
+
+        if ((ogo.layer & TargetsMask) != 0)
+        {
+            ogo.GetComponent<Entity>().TakeDamage(Damage);
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position += (Vector3) Direction * (5f * Time.deltaTime);
+    }
+}
