@@ -20,23 +20,23 @@ public abstract class Attack
     protected virtual void PerformOnPosition(Entity entity, Stats stats, Vector2 position)
     {
     }
-
-    public void Perform(Entity entity, Stats stats, Entity target = null, Vector2? targetPosition = null, int? targetsMask = null)
+    
+    public void Perform(AttackParams attackParams)
     {
         if (!IsReady()) return;
 
-        nextAttackTime = Time.time + GetCooldown() / stats.attackSpeed;
-        if (target != null)
+        nextAttackTime = Time.time + GetCooldown() / attackParams.stats.attackSpeed;
+        if (attackParams.target != null)
         {
-            PerformTarget(entity, stats, target);
+            PerformTarget(attackParams.entity, attackParams.stats, attackParams.target);
         }
-        else if(targetPosition.HasValue)
+        else if(attackParams.targetPosition.HasValue)
         {
-            PerformOnPosition(entity, stats, targetPosition.Value);
+            PerformOnPosition(attackParams.entity, attackParams.stats, attackParams.targetPosition.Value);
         }
-        else if(targetsMask.HasValue)
+        else if(attackParams.targetsMask.HasValue)
         {
-            PerformNoTarget(entity, stats, targetsMask.Value);
+            PerformNoTarget(attackParams.entity, attackParams.stats, attackParams.targetsMask.Value);
         }
 
         Preserved = false;

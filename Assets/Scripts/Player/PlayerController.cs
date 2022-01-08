@@ -57,7 +57,7 @@ public class PlayerController : Entity, IKnightAnimatable
     IEnumerator WaitAndPerformAttack()
     {
         yield return new WaitForSeconds(0.3f);
-        attack.Perform(this, stats, null, targetsMask: ~(1 << 8));
+        attack.Perform(new AttackParams(this, stats, targetsMask: ~(1 << 8)));
     }
     
     public event Action OnAttackStart = delegate { };

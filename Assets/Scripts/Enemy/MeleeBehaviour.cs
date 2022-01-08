@@ -11,11 +11,12 @@ public class MeleeBehaviour : EnemyBehaviour
     }
 
     private MeleeState State;
-
-    private MeleeAoEAttack AoEAttack = new MeleeAoEAttack();
+    private Attack Attack { get; set; }
 
     public MeleeBehaviour(EnemyController controller) : base(controller)
     {
+        controller.attack = new MeleeAoEAttack();
+        Attack = controller.attack;
     }
 
     private Vector2 GetVelocity(Component target)
@@ -31,11 +32,11 @@ public class MeleeBehaviour : EnemyBehaviour
 
         if (ShouldAttack())
         {
-            AoEAttack.Perform(Controller, enemyObject, null, targetsMask: 1 << 8);
+            Controller.StartAttack(new AttackParams(Controller, enemyObject, targetsMask: 1 << 8));
         }
     }
 
     public bool ShouldAttack() =>
-        Vector2.Distance(Controller.transform.position, Player.transform.position) <
-        Controller.enemyObject.attackDistance * 0.7f;
+        Vector2.Distance(Controller.transform.position, Player.transform.position) <=
+        Controller.enemyObject.attackDistance;
 }

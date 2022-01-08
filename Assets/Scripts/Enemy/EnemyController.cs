@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -14,6 +15,8 @@ public class EnemyController : Entity, IKnightAnimatable
     private PlayerController Player { get; set; }
 
     private Rigidbody2D Rb { get; set; }
+
+    public Attack attack;
 
     private void Start()
     {
@@ -52,6 +55,21 @@ public class EnemyController : Entity, IKnightAnimatable
         {
             PlayerDetected = true;
         }
+    }
+
+    public void StartAttack(AttackParams attackParams)
+    {
+        if (!attack.IsReady() || attack.Preserved) return;
+
+        attack.Preserve();
+        OnAttackStart.Invoke();
+        StartCoroutine(nameof(WaitAndPerformAttack), attackParams);
+    }
+
+    IEnumerator WaitAndPerformAttack(AttackParams attackParams)
+    {
+        yield return new WaitForSeconds(0.3f);
+        attack.Perform(attackParams);
     }
 
     public event Action OnAttackStart = delegate { };
