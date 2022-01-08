@@ -21,14 +21,14 @@ public class Entity : MonoBehaviour
 
     public GameObject healthBarPrefab;
     public HealthBarScript healthBarScript;
+    public ProjectileManager projectileManager;
 
     public event Action<float, float> OnHealthChanged = delegate { };
 
     [FormerlySerializedAs("Stats")] public Stats stats;
 
     private bool Invincible { get; set; }
-
-
+    
     public void Start()
     {
         MaxHealth = stats.health;
@@ -36,6 +36,8 @@ public class Entity : MonoBehaviour
 
         healthBarScript = Instantiate(healthBarPrefab).GetComponent<HealthBarScript>();
         healthBarScript.Bind(this);
+
+        projectileManager = GameObject.FindWithTag("ProjectileManager").GetComponent<ProjectileManager>();
     }
 
     private void OnDestroy()

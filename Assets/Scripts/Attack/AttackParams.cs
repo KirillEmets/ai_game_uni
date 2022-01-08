@@ -15,11 +15,12 @@ public class AttackParams
         this.target = target;
     }
 
-    public AttackParams(Entity entity, Stats stats, Vector2 targetPosition)
+    public AttackParams(Entity entity, Stats stats, Vector2 targetPosition, int targetsMask)
     {
         this.entity = entity;
         this.stats = stats;
         this.targetPosition = targetPosition;
+        this.targetsMask = targetsMask;
     }
 
     public AttackParams(Entity entity, Stats stats, int targetsMask)

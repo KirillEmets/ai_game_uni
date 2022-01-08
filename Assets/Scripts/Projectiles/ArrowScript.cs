@@ -6,15 +6,17 @@ public class ArrowScript : MonoBehaviour
     private Collider2D Collider { get; set; }
     private GameObject Owner { get; set; }
     private int TargetsMask { get; set; }
-    private int Damage { get; set; }
+    private float Damage { get; set; }
 
-    void Init(GameObject owner, int damage, Vector2 direction, int targetsMask)
+    public void Init(GameObject owner, float damage, Vector2 direction, int targetsMask)
     {
         Owner = owner;
         Direction = direction.normalized;
         transform.LookAt(transform.position + (Vector3) direction);
         TargetsMask = targetsMask;
         Damage = damage;
+
+        transform.position = Owner.transform.position;
     }
 
     void Start()

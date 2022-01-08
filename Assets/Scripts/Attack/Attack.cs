@@ -16,11 +16,11 @@ public abstract class Attack
     protected virtual void PerformNoTarget(Entity entity, Stats stats, int targetsMask)
     {
     }
-    
-    protected virtual void PerformOnPosition(Entity entity, Stats stats, Vector2 position)
+
+    protected virtual void PerformOnPosition(Entity entity, Stats stats, Vector2 position, int targetsMask)
     {
     }
-    
+
     public void Perform(AttackParams attackParams)
     {
         if (!IsReady()) return;
@@ -30,11 +30,12 @@ public abstract class Attack
         {
             PerformTarget(attackParams.entity, attackParams.stats, attackParams.target);
         }
-        else if(attackParams.targetPosition.HasValue)
+        else if (attackParams.targetPosition.HasValue && attackParams.targetsMask.HasValue)
         {
-            PerformOnPosition(attackParams.entity, attackParams.stats, attackParams.targetPosition.Value);
+            PerformOnPosition(attackParams.entity, attackParams.stats, attackParams.targetPosition.Value,
+                attackParams.targetsMask.Value);
         }
-        else if(attackParams.targetsMask.HasValue)
+        else if (attackParams.targetsMask.HasValue)
         {
             PerformNoTarget(attackParams.entity, attackParams.stats, attackParams.targetsMask.Value);
         }
