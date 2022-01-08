@@ -17,7 +17,7 @@ MonoBehaviour:
   knockback: 1
   attackSpeed: 1
   movementSpeed: 3
-  attackDistance: 2
+  attackDistance: 1.6
   enemyName: 12
   sprite: {fileID: 0}
   size: 1

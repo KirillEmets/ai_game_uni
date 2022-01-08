@@ -27,7 +27,7 @@ public class MeleeAoEAttack : Attack
         foreach (var col in _targets)
         {
             if (col != null)
-                col.GetComponent<Entity>().TakeDamage(stats.damage);
+                col.GetComponent<Entity>()?.TakeDamage(stats.damage);
         }
     }
 }
