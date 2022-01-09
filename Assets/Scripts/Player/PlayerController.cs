@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class PlayerController : Entity, IKnightAnimatable
 {
-    
     public override int GetLayerMask() => 1 << 8;
-    private const int EnemyTargetMask = ~(1 << 8); 
+    private const int EnemyTargetMask = ~(1 << 8);
 
     private Rigidbody2D Rb { get; set; }
     internal Vector2 Velocity { get; private set; }
@@ -26,12 +25,11 @@ public class PlayerController : Entity, IKnightAnimatable
 
     void Update()
     {
-        
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
         }
-        
+
         var vertical = Input.GetAxisRaw("Vertical");
         var horizontal = Input.GetAxisRaw("Horizontal");
         var direction = new Vector2(horizontal, vertical);
@@ -50,6 +48,11 @@ public class PlayerController : Entity, IKnightAnimatable
         StartAttack(new AttackParams(this, stats, mousePos, EnemyTargetMask));
     }
 
+    public override void OnDeath()
+    {
+        
+    }
+
     public void StartAttack(AttackParams attackParams)
     {
         if (!attack.IsReady() || attack.Preserved) return;
@@ -64,7 +67,7 @@ public class PlayerController : Entity, IKnightAnimatable
         yield return new WaitForSeconds(0.3f);
         attack.Perform(attackParams);
     }
-    
+
     public event Action OnAttackStart = delegate { };
     public bool IsRunning() => Velocity.magnitude > 0.1f;
 

@@ -15,6 +15,11 @@ public abstract class Entity : MonoBehaviour
         set
         {
             _health = value;
+            if (_health <= 0)
+            {
+                OnDeathEvent.Invoke();
+                OnDeath();
+            }
             OnHealthChanged.Invoke(_health, MaxHealth);
         }
     }
@@ -24,6 +29,7 @@ public abstract class Entity : MonoBehaviour
     public ProjectileManager projectileManager;
 
     public event Action<float, float> OnHealthChanged = delegate { };
+    public event Action OnDeathEvent = delegate { };
 
     [FormerlySerializedAs("Stats")] public Stats stats;
 
@@ -52,6 +58,11 @@ public abstract class Entity : MonoBehaviour
             return;
 
         Health = math.max(0, Health - amount);
+    }
+
+    public virtual void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     public abstract int GetLayerMask();
