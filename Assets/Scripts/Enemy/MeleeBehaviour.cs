@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 
 
 public class MeleeBehaviour : EnemyBehaviour
 {
-    enum MeleeState
-    {
-        GoToTarget,
-        RunAway,
-        Attacking
-    }
-
-    private MeleeState State;
+    // enum MeleeState
+    // {
+    //     GoToTarget,
+    //     RunAway,
+    //     Attacking
+    // }
+    //
+    // private MeleeState State;
 
     public MeleeBehaviour(EnemyController controller) : base(controller)
     {
@@ -26,7 +28,47 @@ public class MeleeBehaviour : EnemyBehaviour
 
     public override void Update()
     {
-        Controller.SetVelocity(GetVelocity(Player));
+        var moveDirection = Vector2.zero;
+        var myPos = (Vector2) Controller.transform.position;
+        
+        var rangeCohorts = Controller.Cohorts.FindAll(c => c != null && c.EnemyObject.aiType == AI.AIType.Range);
+        var playerPos = (Vector2) Player.transform.position;
+        if (rangeCohorts.Count > 0)
+        {
+            var c = rangeCohorts[0];
+            foreach (var rc in rangeCohorts)
+            {
+                if (Vector2.Distance(rc.transform.position, playerPos) <
+                    Vector2.Distance(c.transform.position, playerPos))
+                {
+                    c = rc;
+                }
+            }
+
+            var cpos = (Vector2) c.transform.position;
+            
+            switch (Player.Weapon)
+            {
+                case Weapon.Sword:
+                {
+                    var targetPos = (cpos + (playerPos - cpos).normalized * 2f);
+                    moveDirection = targetPos - myPos;
+                    break;
+                }
+                case Weapon.Bow:
+                    moveDirection = playerPos - myPos;
+                    break;
+            }
+        }
+        else
+        {
+            moveDirection = playerPos - myPos;
+        }
+        
+
+        
+        
+        Controller.SetVelocity(moveDirection.normalized * enemyObject.movementSpeed);
 
         if (ShouldAttack())
         {

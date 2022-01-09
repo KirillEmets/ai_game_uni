@@ -15,9 +15,15 @@ public class KnightAnimator : MonoBehaviour
     {
         Animatable = animatable as IKnightAnimatable;
         Animatable.OnAttackStart += OnAttackStart;
+        Animatable.OnWeaponChange += OnWeaponChange;
     }
 
-    public void OnAttackStart()
+    private void OnWeaponChange(Weapon weapon)
+    {
+        
+    }
+
+    private void OnAttackStart()
     {
         animator.SetTrigger(Attack);
     }

@@ -14,12 +14,13 @@ public class PlayerController : Entity, IKnightAnimatable
     private Vector2 _refVelocity = Vector2.zero;
 
     public Attack attack;
+    public Weapon Weapon { get; set; }
 
     new void Start()
     {
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
-        attack = new RangeAttack();
+        ChangeWeapon(Weapon.Bow);
     }
 
 
@@ -48,6 +49,19 @@ public class PlayerController : Entity, IKnightAnimatable
         StartAttack(new AttackParams(this, stats, mousePos, EnemyTargetMask));
     }
 
+    void ChangeWeapon(Weapon weapon)
+    {
+        attack = weapon switch
+        {
+            Weapon.Bow => new RangeAttack(),
+            Weapon.Sword => new MeleeAoEAttack(),
+            _ => new MeleeAoEAttack()
+        };
+        
+        Weapon = weapon;
+        OnWeaponChange.Invoke(weapon);
+    }
+
     public override void OnDeath()
     {
         
@@ -69,6 +83,7 @@ public class PlayerController : Entity, IKnightAnimatable
     }
 
     public event Action OnAttackStart = delegate { };
+    public event Action<Weapon> OnWeaponChange = delegate {  };
     public bool IsRunning() => Velocity.magnitude > 0.1f;
 
     public int GetDirection()
@@ -77,4 +92,9 @@ public class PlayerController : Entity, IKnightAnimatable
         var mouseDirectionX = mousePos.x - transform.position.x;
         return mouseDirectionX < 0 ? 1 : -1;
     }
+}
+
+public enum Weapon
+{
+    Sword, Bow
 }

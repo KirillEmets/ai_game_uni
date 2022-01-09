@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -20,6 +21,10 @@ public class EnemyController : Entity, IKnightAnimatable
 
     public Attack attack;
 
+    public List<EnemyController> Cohorts { get; private set; } = new List<EnemyController>();
+
+    public AI.AIType GetAIType() => EnemyObject.aiType;
+
     private void Start()
     {
         base.Start();
@@ -28,6 +33,7 @@ public class EnemyController : Entity, IKnightAnimatable
         EnemyBehaviour = AI.GetBehaviourType(EnemyObject.aiType, this);
         Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         EnemyBehaviour.Player = Player;
+        OnWeaponChange.Invoke(EnemyObject.aiType == AI.AIType.Melee ? Weapon.Sword : Weapon.Bow);
     }
 
     private void Update()
@@ -44,6 +50,11 @@ public class EnemyController : Entity, IKnightAnimatable
     }
 
     public Vector2 GetVelocity() => Rb.velocity;
+
+    public void AddCohorts(IEnumerable<EnemyController> cohorts)
+    {
+        Cohorts.AddRange(cohorts);
+    }
 
     private void DetectPlayer()
     {
@@ -76,6 +87,7 @@ public class EnemyController : Entity, IKnightAnimatable
     }
 
     public event Action OnAttackStart = delegate { };
+    public event Action<Weapon> OnWeaponChange = delegate {  };
     public bool IsRunning() => GetVelocity().magnitude > 0.1f;
     public int GetDirection() => GetVelocity().x < 0 ? 1 : -1;
 }

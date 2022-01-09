@@ -21,11 +21,10 @@ public class ArrowScript : MonoBehaviour
 
         // TargetsMask = targetsMask;
         Filter = new ContactFilter2D {useLayerMask = true, layerMask = targetsMask};
-        Debug.Log(targetsMask);
 
         Damage = damage;
 
-        transform.position = Owner.transform.position;
+        transform.position = (Vector2) Owner.transform.position + direction.normalized / 2f;
     }
 
     void Start()
@@ -35,23 +34,9 @@ public class ArrowScript : MonoBehaviour
 
     readonly List<Collider2D> result = new List<Collider2D>();
 
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     Debug.Log("kek collidsuo");
-    //     var ogo = other.gameObject;
-    //     if (ogo == Owner) return;
-    //
-    //
-    //     if ((ogo.layer & TargetsMask) != 0)
-    //     {
-    //         ogo.GetComponent<Entity>().TakeDamage(Damage);
-    //         Destroy(gameObject);
-    //     }
-    // }
-
     private void FixedUpdate()
     {
-        transform.position += (Vector3) Direction * (8f * Time.deltaTime);
+        transform.position += (Vector3) Direction * (10f * Time.deltaTime);
 
         result.Clear();
 
