@@ -11,12 +11,10 @@ public class MeleeBehaviour : EnemyBehaviour
     }
 
     private MeleeState State;
-    private Attack Attack { get; set; }
 
     public MeleeBehaviour(EnemyController controller) : base(controller)
     {
         controller.attack = new MeleeAoEAttack();
-        Attack = controller.attack;
     }
 
     private Vector2 GetVelocity(Component target)
@@ -38,5 +36,5 @@ public class MeleeBehaviour : EnemyBehaviour
 
     public bool ShouldAttack() =>
         Vector2.Distance(Controller.transform.position, Player.transform.position) <=
-        Controller.enemyObject.attackDistance;
+        Controller.EnemyObject.attackDistance;
 }

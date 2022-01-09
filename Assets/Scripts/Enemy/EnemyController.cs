@@ -9,7 +9,7 @@ public class EnemyController : Entity, IKnightAnimatable
 
     const int PlayerLayerMask = ~(1 << 7);
 
-    public EnemyObject enemyObject;
+    public EnemyObject EnemyObject { get; set; }
 
     private EnemyBehaviour EnemyBehaviour { get; set; }
 
@@ -24,7 +24,8 @@ public class EnemyController : Entity, IKnightAnimatable
     {
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
-        EnemyBehaviour = AI.GetBehaviourType(enemyObject.aiType, this);
+        EnemyObject = stats as EnemyObject;
+        EnemyBehaviour = AI.GetBehaviourType(EnemyObject.aiType, this);
         Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         EnemyBehaviour.Player = Player;
     }
@@ -50,7 +51,7 @@ public class EnemyController : Entity, IKnightAnimatable
 
         var pos = transform.position;
 
-        var hit = Physics2D.Raycast(pos, Player.transform.position - pos, enemyObject.detectionDistance,
+        var hit = Physics2D.Raycast(pos, Player.transform.position - pos, EnemyObject.detectionDistance,
             PlayerLayerMask);
         var hitCollider = hit.collider;
         if ((object) hitCollider != null && hitCollider.CompareTag("Player"))

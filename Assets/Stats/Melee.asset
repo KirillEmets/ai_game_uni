@@ -9,12 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862ab93393d543e791bdb90c6b606ff2, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: fa0b19975c014799a262747b020280b2, type: 3}
+  m_Name: Melee
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   damage: 40
   knockback: 1
-  attackSpeed: 3
-  movementSpeed: 6
-  attackDistance: 2
+  attackSpeed: 1
+  movementSpeed: 3
+  attackDistance: 1.6
+  enemyName: 12
+  sprite: {fileID: 0}
+  size: 1
+  aiType: 0
+  detectionDistance: 5

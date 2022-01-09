@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 331301402494048265, guid: 9fd6f8115df42d9468a2027f9d013545, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 90a9a31aaf61e984bb909619a71df39b, type: 2}
     - target: {fileID: 331301402494048266, guid: 9fd6f8115df42d9468a2027f9d013545, type: 3}
       propertyPath: m_Name
       value: Enemy (2)

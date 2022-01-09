@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
+
 public class AttackParams
 {
-    public Entity entity;
-    public Stats stats;
-    public Entity target = null;
+    public readonly Entity entity;
+    public readonly Stats stats;
+    public readonly Entity target = null;
     public Vector2? targetPosition = null;
     public int? targetsMask = null;
 
