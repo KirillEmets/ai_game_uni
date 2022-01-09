@@ -20,7 +20,7 @@ public class PlayerController : Entity, IKnightAnimatable
     {
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
-        ChangeWeapon(Weapon.Bow);
+        ChangeWeapon(Weapon.Sword);
     }
 
 
@@ -29,6 +29,11 @@ public class PlayerController : Entity, IKnightAnimatable
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            ChangeWeapon(Weapon == Weapon.Bow ? Weapon.Sword : Weapon.Bow);
         }
 
         var vertical = Input.GetAxisRaw("Vertical");
