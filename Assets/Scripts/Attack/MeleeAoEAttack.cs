@@ -23,7 +23,6 @@ public class MeleeAoEAttack : Attack
             targetsMask
         );
 
-        Debug.Log("kek " + Time.time);
         foreach (var col in _targets)
         {
             if (col != null)

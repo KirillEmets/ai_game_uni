@@ -62,14 +62,13 @@ public class PlayerController : Entity, IKnightAnimatable
             Weapon.Sword => new MeleeAoEAttack(),
             _ => new MeleeAoEAttack()
         };
-        
+
         Weapon = weapon;
         OnWeaponChange.Invoke(weapon);
     }
 
     public override void OnDeath()
     {
-        
     }
 
     public void StartAttack(AttackParams attackParams)
@@ -88,8 +87,9 @@ public class PlayerController : Entity, IKnightAnimatable
     }
 
     public event Action OnAttackStart = delegate { };
-    public event Action<Weapon> OnWeaponChange = delegate {  };
+    public event Action<Weapon> OnWeaponChange = delegate { };
     public bool IsRunning() => Velocity.magnitude > 0.1f;
+    public Weapon GetWeapon() => Weapon;
 
     public int GetDirection()
     {
@@ -101,5 +101,6 @@ public class PlayerController : Entity, IKnightAnimatable
 
 public enum Weapon
 {
-    Sword, Bow
+    Sword,
+    Bow
 }

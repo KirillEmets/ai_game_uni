@@ -7,4 +7,5 @@ public interface IKnightAnimatable
 
     public bool IsRunning();
     public int GetDirection();
+    public Weapon GetWeapon();
 }
