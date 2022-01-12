@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4304160490134154094}
   - component: {fileID: 1647572149}
   - component: {fileID: 2678413896170810420}
-  - component: {fileID: 1411585438}
+  - component: {fileID: 543419396}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -131,8 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2d189d7a520a045b57c14e92ccb430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 0}
+  _health: 0
+  healthBarPrefab: {fileID: 782319788206540904, guid: 9a3d0b073d1b46347ace46e2868bf98e, type: 3}
   healthBarScript: {fileID: 0}
+  projectileManager: {fileID: 0}
   stats: {fileID: 11400000, guid: 365dfd255a569cc4eb502d5cc296de59, type: 2}
 --- !u!58 &1647572149
 CircleCollider2D:
@@ -171,7 +173,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1411585438
+--- !u!114 &543419396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,11 +182,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4881633993461935847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b2dfe7ea80b4eb7883771c3322c3773, type: 3}
+  m_Script: {fileID: 11500000, guid: 77dc1ff2151f4762b9cfc3d6d426f8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2592441959825211305}
-  playerController: {fileID: 4304160490134154094}
+  animatable: {fileID: 4304160490134154094}
 --- !u!1001 &2499083360626696859
 PrefabInstance:
   m_ObjectHideFlags: 0

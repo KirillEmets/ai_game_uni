@@ -14,7 +14,9 @@ public class PlayerController : Entity, IKnightAnimatable
     private Vector2 _refVelocity = Vector2.zero;
 
     public Attack attack;
-    public Weapon Weapon { get; set; }
+    public Weapon Weapon { get; private set; }
+
+    public int ArrowCount { get; set; } = 5;
 
     new void Start()
     {
@@ -75,6 +77,12 @@ public class PlayerController : Entity, IKnightAnimatable
     {
         if (!attack.IsReady() || attack.Preserved) return;
 
+        if (Weapon == Weapon.Bow)
+        {
+            if(ArrowCount <= 0) return;
+            ArrowCount -= 1;
+        }
+
         attack.Preserve();
         OnAttackStart.Invoke();
         StartCoroutine(nameof(WaitAndPerformAttack), attackParams);
@@ -84,6 +92,7 @@ public class PlayerController : Entity, IKnightAnimatable
     {
         yield return new WaitForSeconds(0.3f);
         attack.Perform(attackParams);
+
     }
 
     public event Action OnAttackStart = delegate { };
