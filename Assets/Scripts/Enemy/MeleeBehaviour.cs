@@ -31,7 +31,7 @@ public class MeleeBehaviour : EnemyBehaviour
         var moveDirection = Vector2.zero;
         var myPos = (Vector2) Controller.transform.position;
         
-        var rangeCohorts = Controller.Cohorts.FindAll(c => c != null && c.EnemyObject.aiType == AI.AIType.Range);
+        var rangeCohorts = Controller.Cohorts.FindAll(c => c != null && c.Weapon == Weapon.Bow);
         var playerPos = (Vector2) Player.transform.position;
         if (rangeCohorts.Count > 0)
         {
@@ -65,9 +65,7 @@ public class MeleeBehaviour : EnemyBehaviour
             moveDirection = playerPos - myPos;
         }
         
-
-        
-        
+        if(moveDirection.magnitude < 0.8f) moveDirection = Vector2.zero;
         Controller.SetVelocity(moveDirection.normalized * enemyObject.movementSpeed);
 
         if (ShouldAttack())

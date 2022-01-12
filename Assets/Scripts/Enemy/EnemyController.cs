@@ -21,22 +21,40 @@ public class EnemyController : Entity, IKnightAnimatable
 
     public Attack attack;
 
+    public Weapon Weapon { get; set; }
+
     public List<EnemyController> Cohorts { get; private set; } = new List<EnemyController>();
-
-    public AI.AIType GetAIType() => EnemyObject.aiType;
-
+    
     private void Awake()
     {
         EnemyObject = stats as EnemyObject;
     }
 
-    private void Start()
+    public void Init(Weapon weapon, IEnumerable<EnemyController> cohorts)
+    {
+        Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        ChangeWeapon(weapon);
+        AddCohorts(cohorts);
+    }
+
+    public void ChangeWeapon(Weapon weapon)
+    {
+        Weapon = weapon;
+
+        if (weapon == Weapon.Sword)
+            EnemyBehaviour = new MeleeBehaviour(this);
+        else
+            EnemyBehaviour = new RangeBehaviour(this);
+
+        EnemyBehaviour.Player = Player;
+
+        OnWeaponChange(weapon);
+    }
+    
+    private new void Start()
     {
         base.Start();
         Rb = GetComponent<Rigidbody2D>();
-        EnemyBehaviour = AI.GetBehaviourType(EnemyObject.aiType, this);
-        Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        EnemyBehaviour.Player = Player;
     }
     
     
@@ -93,7 +111,7 @@ public class EnemyController : Entity, IKnightAnimatable
 
     public event Action OnAttackStart = delegate { };
     public event Action<Weapon> OnWeaponChange = delegate {  };
-    public bool IsRunning() => GetVelocity().magnitude > 0.1f;
-    public int GetDirection() => GetVelocity().x < 0 ? 1 : -1;
-    public Weapon GetWeapon() => EnemyObject.aiType == AI.AIType.Melee ? Weapon.Sword : Weapon.Bow;
+    public bool IsRunning() => GetVelocity().magnitude > 0.3f;
+    public int GetDirection() => Math.Sign((transform.position - Player.transform.position).x);
+    public Weapon GetWeapon() => Weapon;
 }

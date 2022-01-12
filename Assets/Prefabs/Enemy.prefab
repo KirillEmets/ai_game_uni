@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 331301402494048265}
   - component: {fileID: 331301402494048264}
   - component: {fileID: 331301402494048267}
+  - component: {fileID: -8362563114570669748}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -51,7 +52,6 @@ MonoBehaviour:
   healthBarScript: {fileID: 0}
   projectileManager: {fileID: 0}
   stats: {fileID: 11400000, guid: 6d4efd59df62bc1439d8216164bbaba3, type: 2}
-  enemyObject: {fileID: 11400000, guid: 6d4efd59df62bc1439d8216164bbaba3, type: 2}
 --- !u!50 &331301402494048264
 Rigidbody2D:
   serializedVersion: 4
@@ -72,7 +72,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &331301402494048267
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -89,6 +89,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-8362563114570669748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331301402494048266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77dc1ff2151f4762b9cfc3d6d426f8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3318876431471448937}
+  animatable: {fileID: 331301402494048265}
 --- !u!1001 &3412523104864898651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181,5 +195,10 @@ PrefabInstance:
 --- !u!4 &3410705631156787439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4210157123753652, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
+  m_PrefabInstance: {fileID: 3412523104864898651}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3318876431471448937 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95898481864777010, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
   m_PrefabInstance: {fileID: 3412523104864898651}
   m_PrefabAsset: {fileID: 0}

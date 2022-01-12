@@ -8,8 +8,6 @@ public class EnemyObject : Stats
     public string enemyName;
     public Sprite sprite;
     public float size;
-
-    public AI.AIType aiType;
-
+    
     public float detectionDistance;
 }

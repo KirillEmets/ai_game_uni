@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa0b19975c014799a262747b020280b2, type: 3}
-  m_Name: Range
+  m_Name: MobStats
   m_EditorClassIdentifier: 
   health: 100
   damage: 40
@@ -21,5 +21,5 @@ MonoBehaviour:
   enemyName: 12
   sprite: {fileID: 0}
   size: 1
-  aiType: 1
+  aiType: 0
   detectionDistance: 5
