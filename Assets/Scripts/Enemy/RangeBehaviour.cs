@@ -16,7 +16,8 @@ public class RangeBehaviour : EnemyBehaviour
         var playerPos = (Vector2) Player.transform.position;
         var moveDirection = Vector2.zero;
 
-        if (Vector2.Distance(myPos, playerPos) <= 6)
+        var distance = Vector2.Distance(myPos, playerPos);
+        if (distance <= 6)
         {
             moveDirection = (myPos - playerPos);
 
@@ -43,9 +44,15 @@ public class RangeBehaviour : EnemyBehaviour
 
             moveDirection = bestDirection;
         }
+        else if(distance >= 12)
+        {
+            moveDirection = (playerPos - myPos);
+        }
 
+        var meleeCohorts = Controller.Cohorts.FindAll(c => c != null && c.Weapon == Weapon.Sword);
         var rangeCohorts = Controller.Cohorts.FindAll(c => c != null && c.Weapon == Weapon.Bow);
-        if (rangeCohorts.Count > 0)
+
+        if (meleeCohorts.Count > 0 && rangeCohorts.Count > 0)
         {
             var center = rangeCohorts.Aggregate(Vector2.zero,
                 (current, rc) => current + (Vector2) rc.transform.position / rangeCohorts.Count);

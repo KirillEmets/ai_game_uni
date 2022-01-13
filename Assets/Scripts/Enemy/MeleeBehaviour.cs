@@ -30,7 +30,7 @@ public class MeleeBehaviour : EnemyBehaviour
     {
         var moveDirection = Vector2.zero;
         var myPos = (Vector2) Controller.transform.position;
-        
+
         var rangeCohorts = Controller.Cohorts.FindAll(c => c != null && c.Weapon == Weapon.Bow);
         var playerPos = (Vector2) Player.transform.position;
         if (rangeCohorts.Count > 0)
@@ -46,26 +46,33 @@ public class MeleeBehaviour : EnemyBehaviour
             }
 
             var cpos = (Vector2) c.transform.position;
-            
+
             switch (Player.Weapon)
             {
+                case Weapon.Bow:
+                    if (Player.ArrowCount == 0)
+                    {
+                        var targetPos = (cpos + (playerPos - cpos).normalized * 2f);
+                        moveDirection = targetPos - myPos;
+                    }
+                    else
+                        moveDirection = playerPos - myPos;
+
+                    break;
                 case Weapon.Sword:
                 {
                     var targetPos = (cpos + (playerPos - cpos).normalized * 2f);
                     moveDirection = targetPos - myPos;
                     break;
                 }
-                case Weapon.Bow:
-                    moveDirection = playerPos - myPos;
-                    break;
             }
         }
         else
         {
             moveDirection = playerPos - myPos;
         }
-        
-        if(moveDirection.magnitude < 0.8f) moveDirection = Vector2.zero;
+
+        if (moveDirection.magnitude < 0.8f) moveDirection = Vector2.zero;
         Controller.SetVelocity(moveDirection.normalized * enemyObject.movementSpeed);
 
         if (ShouldAttack())

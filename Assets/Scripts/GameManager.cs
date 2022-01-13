@@ -10,19 +10,20 @@ public class GameManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public GameObject dropItemPrefab;
-    public List<Transform> spawnDots;
-
+    public GameObject spawnDots;
+    private Transform[] dots;
+    
     private int currentWave = 0;
 
     private (int, int)[][] Waves { get; } =
     {
-        new[] {(1, 0)},
-        new[] {(1, 1)},
-        new[] {(2, 1)},
-        new[] {(2, 2)},
-        new[] {(3, 0)},
-        new[] {(0, 3)},
-        new[] {(1, 0)},
+        // new[] {(1, 0)},
+        // new[] {(1, 1)},
+        // new[] {(2, 1)},
+        // new[] {(2, 2)},
+        // new[] {(3, 0)},
+        // new[] {(0, 3)},
+        // new[] {(1, 0)},
         new[] {(1, 1), (1, 1)},
         new[] {(3, 0), (0, 3)},
         new[] {(2, 2), (2, 2), (2, 2)},
@@ -32,21 +33,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        dots = spawnDots.GetComponentsInChildren<Transform>();
         CreateEnemies(Waves[0]);
-        foreach (var group in Waves)
-        {
-        }
     }
 
-    void CreateEnemies(IEnumerable<(int, int)> groups)
+    void CreateEnemies((int, int)[] groups)
     {
+        var waveSize = groups.Sum(x => x.Item1 + x.Item2);
+        var deadEnemies = 0;
+
         foreach (var group in groups)
         {
             var (m, r) = group;
-
-            var deadEnemies = 0;
-            var i = Random.Range(0, spawnDots.Count);
-            var enemies = SpawnEnemies(spawnDots[i].position, m, r);
+            var i = Random.Range(0, dots.Length);
+            var enemies = SpawnEnemies(dots[i].position, m, r);
             enemies.ForEach(e => e.OnDeathEvent += () =>
             {
                 var go = Instantiate(dropItemPrefab);
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 deadEnemies += 1;
-                if (deadEnemies != enemies.Count) return;
+                if (deadEnemies != waveSize) return;
 
                 currentWave += 1;
                 var nextCount = currentWave < Waves.Length ? Waves[currentWave] : Waves.Last();
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator WaitAndCreateNew(IEnumerable<(int, int)> count)
+    IEnumerator WaitAndCreateNew((int, int)[] count)
     {
         yield return new WaitForSeconds(6);
         CreateEnemies(count);
