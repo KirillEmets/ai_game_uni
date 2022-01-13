@@ -13,11 +13,7 @@ public class UIControllerScript : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         UpdateArrowCount(Player.ArrowCount);
-        Player.OnAttackStart += () =>
-        {
-            UpdateArrowCount(Player.ArrowCount);
-        };
-
+        Player.OnArrowCountChange += UpdateArrowCount;
     }
 
     void UpdateArrowCount(int count)

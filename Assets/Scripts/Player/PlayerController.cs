@@ -16,7 +16,18 @@ public class PlayerController : Entity, IKnightAnimatable
     public Attack attack;
     public Weapon Weapon { get; private set; }
 
-    public int ArrowCount { get; set; } = 5;
+
+    private int _arrowCount;
+    public int ArrowCount {
+        get => _arrowCount;
+        set
+        {
+            _arrowCount = value;
+            OnArrowCountChange(value);
+        }
+    }
+    public event Action<int> OnArrowCountChange = delegate { };
+
 
     new void Start()
     {

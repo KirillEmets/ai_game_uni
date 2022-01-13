@@ -60,6 +60,11 @@ public abstract class Entity : MonoBehaviour
         Health = math.max(0, Health - amount);
     }
 
+    public void TakeHeal(float amount)
+    {
+        Health = math.min(MaxHealth, Health + amount);
+    }
+
     public virtual void OnDeath()
     {
         Destroy(gameObject);
