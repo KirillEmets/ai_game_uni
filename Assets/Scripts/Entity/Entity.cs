@@ -17,6 +17,10 @@ public abstract class Entity : MonoBehaviour
             _health = value;
             if (_health <= 0)
             {
+                GonnaDie = true;
+                if (Invincible)
+                    return;
+                
                 OnDeathEvent.Invoke();
                 OnDeath();
             }
@@ -33,7 +37,8 @@ public abstract class Entity : MonoBehaviour
 
     [FormerlySerializedAs("Stats")] public Stats stats;
 
-    private bool Invincible { get; set; }
+    public bool Invincible { get; set; }
+    public bool GonnaDie { get; set; }
     
     public void Start()
     {
@@ -54,9 +59,6 @@ public abstract class Entity : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (Invincible)
-            return;
-
         Health = math.max(0, Health - amount);
     }
 

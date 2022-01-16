@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -13,17 +14,22 @@ public class GameManager : MonoBehaviour
     public GameObject spawnDots;
     private Transform[] dots;
     
+    private PlayerController PlayerController { get; set; }
+
+    public UIControllerScript uiControllerScript;
+    
     private int currentWave = 0;
+    private int _kills = 0;
 
     private (int, int)[][] Waves { get; } =
     {
-        // new[] {(1, 0)},
-        // new[] {(1, 1)},
-        // new[] {(2, 1)},
-        // new[] {(2, 2)},
-        // new[] {(3, 0)},
-        // new[] {(0, 3)},
-        // new[] {(1, 0)},
+        new[] {(1, 0)},
+        new[] {(1, 1)},
+        new[] {(2, 1)},
+        new[] {(2, 2)},
+        new[] {(3, 0)},
+        new[] {(0, 3)},
+        new[] {(1, 0)},
         new[] {(1, 1), (1, 1)},
         new[] {(3, 0), (0, 3)},
         new[] {(2, 2), (2, 2), (2, 2)},
@@ -33,8 +39,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        PlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        PlayerController.OnDeathEvent += OnPlayerDeath;
         dots = spawnDots.GetComponentsInChildren<Transform>();
-        CreateEnemies(Waves[0]);
+        StartCoroutine(nameof(WaitAndCreateNew), Waves[0]);
+    }
+
+    void OnPlayerDeath()
+    {
+        PlayerController.Invincible = true;
+    }
+
+    public void OnRestartButtonClick()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void CreateEnemies((int, int)[] groups)
@@ -65,6 +83,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 deadEnemies += 1;
+                _kills += 1;
+                uiControllerScript.UpdateKillCounter(_kills);
                 if (deadEnemies != waveSize) return;
 
                 currentWave += 1;

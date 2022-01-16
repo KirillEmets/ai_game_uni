@@ -39,6 +39,12 @@ public class PlayerController : Entity, IKnightAnimatable
 
     void Update()
     {
+        if (GonnaDie)
+        {
+            Rb.velocity = Vector2.zero;
+            return;
+        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
